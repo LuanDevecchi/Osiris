@@ -1,5 +1,7 @@
 #pragma once
 
+#define TOGGLE(bvar) bvar = !bvar
+
 class GUI final {
 public:
     void render() noexcept;
