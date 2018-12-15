@@ -38,17 +38,17 @@ void GUI::renderMenuBar() noexcept
          * if (ImGui::MenuItem("Aimbot"))
               window.aimbot = true;
         */
-        if (ImGui::MenuItem("Glow"))
-            window.glow = true;
+		if (ImGui::MenuItem("Glow"))
+			TOGGLE(window.glow);
 
         if (ImGui::MenuItem("Chams"))
-            window.chams = true;
+            TOGGLE(window.chams);
 
-        if (ImGui::MenuItem("Triggerbot"))
-            window.triggerbot = true;
+		if (ImGui::MenuItem("Triggerbot"))
+			TOGGLE(window.triggerbot);
 
-        if (ImGui::MenuItem("Misc"))
-            window.misc = true;
+		if (ImGui::MenuItem("Misc"))
+			TOGGLE(window.misc);
 
         if (ImGui::BeginMenu("Config")) {
             if (ImGui::MenuItem("Load"))
@@ -132,7 +132,7 @@ void GUI::renderMiscWindow() noexcept
         ImGui::PushItemWidth(120.0f);
         ImGui::Checkbox("Bunny hop", &config.misc.bunnyHop);
         char buf[16];
-        std::strcpy(buf, config.misc.clanTag.c_str());
+        strcpy_s(buf, IM_ARRAYSIZE(buf) , config.misc.clanTag.c_str());
         ImGui::InputText("Clantag", buf, IM_ARRAYSIZE(buf));
         config.misc.clanTag = buf;
         ImGui::Checkbox("Disable post-processing", &config.misc.disablePostProcessing);
