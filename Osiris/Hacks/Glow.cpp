@@ -1,6 +1,7 @@
 #include "../Config.h"
 #include "Glow.h"
 #include "../Memory.h"
+#include "../SDK/ClientClass.h"
 
 void Glow::render() noexcept
 {
@@ -12,7 +13,7 @@ void Glow::render() noexcept
         if (glowobject.isUnused() || !glowobject.entity)
             continue;
 
-        if (glowobject.entity->IsDormant())
+        if (glowobject.entity->isDormant())
             continue;
 
         glowobject.renderWhenOccluded = false;
@@ -26,9 +27,9 @@ void Glow::render() noexcept
             glowobject.fullBloomStencilTestValue = 0;
             glowobject.bloomAmount = glow.thickness;
 
-            switch (glowobject.entity->GetClientClass()->m_ClassID) {
+            switch (glowobject.entity->getClientClass()->classId) {
             case ClassId::CSPlayer:
-                if (reinterpret_cast<BaseEntity*>(glowobject.entity)->isEnemy()) {
+                if (glowobject.entity->isEnemy()) {
                     if (glow.enemies) {
                         glowobject.glowColor = glow.enemiesColor;
                         glowobject.renderWhenOccluded = true;

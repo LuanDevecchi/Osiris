@@ -7,12 +7,10 @@
 
 static int findTarget(UserCmd* cmd, Vector& position)
 {
-    for (int i = 1; i < interfaces.engineClient->getMaxClients(); i++) {
-        auto entity = interfaces.clientEntityList->getClientEntity(i);
-        if (!entity || !entity->isAlive() || entity == *memory.localPlayer
-            || entity->getTeamNumber() == (*memory.localPlayer)->getTeamNumber())
+    for (int i = 1; i < interfaces.engine->getMaxClients(); i++) {
+        auto entity = interfaces.entityList->getClientEntity(i);
+        if (!entity || !entity->isDormant() || !entity->isAlive() || !entity->isEnemy())
             continue;
-        return i;
     }
 }
 

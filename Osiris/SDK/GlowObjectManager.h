@@ -1,34 +1,25 @@
 #pragma once
 
-#include "ClientEntity.h"
+#include "Entity.h"
 #include "UtlVector.h"
+#include "Vector.h"
 
-class GlowObjectDefinition {
-public:
-    ClientEntity* entity;
-    union
-    {
-        Vector glowColor;
-        struct
-        {
-            float   red;
-            float   green;
-            float   blue;
-        };
-    };
+struct GlowObjectDefinition {
+    Entity* entity;
+    Vector glowColor;
     float   alpha;
-    uint8_t pad[4];
+    std::byte pad[4];
     float   m_flSomeFloat;
     float   bloomAmount;
     float   m_flAnotherFloat;
     bool    renderWhenOccluded;
     bool    renderWhenUnoccluded;
     bool    fullBloomRender;
-    uint8_t pad1;
+    std::byte pad1;
     int fullBloomStencilTestValue;
-    int32_t glowStyle;
-    int32_t splitScreenSlot;
-    int32_t nextFreeSlot;
+    int glowStyle;
+    int splitScreenSlot;
+    int nextFreeSlot;
 
     constexpr bool isUnused() const noexcept { return nextFreeSlot != ENTRY_IN_USE; }
 
@@ -36,8 +27,7 @@ public:
     static constexpr int ENTRY_IN_USE = -2;
 };
 
-class GlowObjectManager {
-public:
+struct GlowObjectManager {
     UtlVector<GlowObjectDefinition> glowObjectDefinitions;
     int firstFreeSlot;
 };

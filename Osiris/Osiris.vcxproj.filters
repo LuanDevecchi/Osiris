@@ -63,9 +63,6 @@
     <ClCompile Include="Interfaces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\BaseEntity.cpp">
-      <Filter>SDK</Filter>
-    </ClCompile>
     <ClCompile Include="Hacks\Misc.cpp">
       <Filter>Hacks</Filter>
     </ClCompile>
@@ -131,22 +128,7 @@
     <ClInclude Include="Interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDK\EngineClient.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\BaseEntity.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\ClientEntityList.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
     <ClInclude Include="SDK\UserCmd.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\ClientMode.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\Client.h">
       <Filter>SDK</Filter>
     </ClInclude>
     <ClInclude Include="SDK\Material.h">
@@ -179,27 +161,6 @@
     <ClInclude Include="SDK\ClientClass.h">
       <Filter>SDK</Filter>
     </ClInclude>
-    <ClInclude Include="SDK\Enums.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\ClientNetworkable.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\HandleEntity.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\ClientUnknown.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\ClientRenderable.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\ClientThinkable.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="SDK\ClientEntity.h">
-      <Filter>SDK</Filter>
-    </ClInclude>
     <ClInclude Include="SDK\Cvar.h">
       <Filter>SDK</Filter>
     </ClInclude>
@@ -226,6 +187,21 @@
     </ClInclude>
     <ClInclude Include="Hacks\Aimbot.h">
       <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Entity.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\ClassId.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\EntityList.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Engine.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\InputSystem.h">
+      <Filter>SDK</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -33,6 +33,8 @@ static HRESULT __stdcall hookedPresent(IDirect3DDevice9* device, const RECT* src
 {
     static bool isInitialised{ false };
 
+    static bool isMenuToggled = false;
+
     if (!isInitialised) {
         ImGui::CreateContext();
         ImGui_ImplWin32_Init(FindWindowA("Valve001", NULL));
@@ -46,6 +48,7 @@ static HRESULT __stdcall hookedPresent(IDirect3DDevice9* device, const RECT* src
         ImGuiIO& io = ImGui::GetIO();
         io.IniFilename = nullptr;
         io.LogFilename = nullptr;
+        io.MouseDrawCursor = true;
         char buffer[MAX_PATH];
         GetWindowsDirectoryA(buffer, MAX_PATH);
         io.Fonts->AddFontFromFileTTF(std::string{ buffer + std::string{ "\\Fonts\\Tahoma.ttf" } }.c_str(), 16.0f);
@@ -60,6 +63,12 @@ static HRESULT __stdcall hookedPresent(IDirect3DDevice9* device, const RECT* src
         IDirect3DVertexDeclaration9* vertexDeclaration;
         device->GetVertexDeclaration(&vertexDeclaration);
 
+        if (!isMenuToggled) {
+           memory.input->isMouseInitialized = false;
+           memory.input->isMouseActive = false;
+           interfaces.inputSystem->enableInput(false);
+           isMenuToggled = true;
+        }
         ImGui_ImplDX9_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
@@ -71,6 +80,14 @@ static HRESULT __stdcall hookedPresent(IDirect3DDevice9* device, const RECT* src
         ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
         device->SetVertexDeclaration(vertexDeclaration);
+    }
+    else {
+        if (isMenuToggled) {
+            memory.input->isMouseInitialized = true;
+            interfaces.inputSystem->enableInput(true);
+            interfaces.inputSystem->resetInputState();
+            isMenuToggled = false;
+        }
     }
     return hooks.originalPresent(device, src, dest, windowOverride, dirtyRegion);
 }
@@ -86,7 +103,7 @@ static HRESULT __stdcall hookedReset(IDirect3DDevice9* device, D3DPRESENT_PARAME
 static bool __stdcall hookedCreateMove(float inputSampleTime, UserCmd* cmd) noexcept
 {
     hooks.clientMode.getOriginal<void(__thiscall*)(ClientMode*, float, UserCmd*)>(24)(memory.clientMode, inputSampleTime, cmd);
-    if (interfaces.engineClient->isConnected() && interfaces.engineClient->isInGame()) {
+    if (interfaces.engine->isInGame()) {
         Misc::skybox();
         Misc::bunnyHop(cmd);
         Misc::removeCrouchCooldown(cmd);
@@ -100,13 +117,13 @@ static void __stdcall hookedLockCursor() noexcept
 {
     if (gui.isOpen)
         interfaces.surface->unlockCursor();
-    else
-        hooks.surface.getOriginal<void(__thiscall*)(Surface*)>(67)(interfaces.surface);
+    //else
+       // hooks.surface.getOriginal<void(__thiscall*)(Surface*)>(67)(interfaces.surface);
 }
 
 static int __stdcall hookedDoPostScreenEffects(int param) noexcept
 {
-    if (interfaces.engineClient->isConnected() && interfaces.engineClient->isInGame()) {
+    if (interfaces.engine->isInGame()) {
         Misc::inverseRagdollGravity();
         Misc::removeBlood();
         Misc::removeSmoke();
@@ -121,7 +138,7 @@ static int __stdcall hookedDoPostScreenEffects(int param) noexcept
 
 static float __stdcall hookedGetViewModelFov() noexcept
 {
-    if (interfaces.engineClient->isConnected() && interfaces.engineClient->isInGame() && !(*memory.localPlayer)->isScoped())
+    if (interfaces.engine->isInGame() && !(*memory.localPlayer)->isScoped())
         return static_cast<float>(config.misc.viewmodelFov);
     else
         return 60.0f;
@@ -134,7 +151,7 @@ Hooks::Hooks()
     originalReset = **reinterpret_cast<decltype(&originalReset)*>(memory.reset);
     **reinterpret_cast<void***>(memory.reset) = reinterpret_cast<void*>(&hookedReset);
 
-    surface.hookAt(67, hookedLockCursor);
+    // surface.hookAt(67, hookedLockCursor);
 
     clientMode.hookAt(24, hookedCreateMove);
     clientMode.hookAt(44, hookedDoPostScreenEffects);
@@ -146,7 +163,13 @@ Hooks::Vmt::Vmt(void* const base)
     oldVmt = *reinterpret_cast<std::uintptr_t**>(base);
     length = calculateLength(oldVmt);
 
-    newVmt = findFreeDataPage(base, length);
+    try {
+        newVmt = findFreeDataPage(base, length);
+    }
+    catch (const std::runtime_error& e) {
+        MessageBox(NULL, e.what(), "Error", MB_OK | MB_ICONERROR);
+        std::exit(EXIT_FAILURE);
+    }
     std::copy(oldVmt, oldVmt + length, newVmt);
     *reinterpret_cast<std::uintptr_t**>(base) = newVmt;
 }
@@ -169,6 +192,8 @@ std::uintptr_t* Hooks::Vmt::findFreeDataPage(void* const base, std::size_t vmtSi
         }
         else
             currentAddress -= vmtSize;
+
+    throw std::runtime_error{ "Could not find free memory pages in module at " + std::to_string(reinterpret_cast<int>(moduleInfo.lpBaseOfDll)) };
 }
 
 std::size_t Hooks::Vmt::calculateLength(std::uintptr_t* vmt) const noexcept

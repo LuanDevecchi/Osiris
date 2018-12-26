@@ -37,7 +37,6 @@
     <ClCompile Include="Interfaces.cpp" />
     <ClCompile Include="json\jsoncpp.cpp" />
     <ClCompile Include="Memory.cpp" />
-    <ClCompile Include="SDK\BaseEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
@@ -46,19 +45,12 @@
     <ClInclude Include="Hacks\Glow.h" />
     <ClInclude Include="Hacks\Misc.h" />
     <ClInclude Include="Hacks\Triggerbot.h" />
-    <ClInclude Include="SDK\BaseEntity.h" />
-    <ClInclude Include="SDK\Client.h" />
+    <ClInclude Include="SDK\Entity.h" />
     <ClInclude Include="SDK\ClientClass.h" />
-    <ClInclude Include="SDK\ClientEntity.h" />
-    <ClInclude Include="SDK\ClientEntityList.h" />
-    <ClInclude Include="SDK\ClientMode.h" />
-    <ClInclude Include="SDK\ClientNetworkable.h" />
-    <ClInclude Include="SDK\ClientRenderable.h" />
-    <ClInclude Include="SDK\ClientThinkable.h" />
-    <ClInclude Include="SDK\ClientUnknown.h" />
+    <ClInclude Include="SDK\EntityList.h" />
     <ClInclude Include="SDK\Cvar.h" />
-    <ClInclude Include="SDK\EngineClient.h" />
-    <ClInclude Include="SDK\Enums.h" />
+    <ClInclude Include="SDK\Engine.h" />
+    <ClInclude Include="SDK\ClassId.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="Hooks.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -74,8 +66,8 @@
     <ClInclude Include="json\json.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="SDK\GlowObjectManager.h" />
-    <ClInclude Include="SDK\HandleEntity.h" />
     <ClInclude Include="SDK\Input.h" />
+    <ClInclude Include="SDK\InputSystem.h" />
     <ClInclude Include="SDK\Material.h" />
     <ClInclude Include="SDK\MaterialSystem.h" />
     <ClInclude Include="SDK\ModelRender.h" />

@@ -98,16 +98,20 @@ void GUI::renderGlowWindow() noexcept
 void GUI::renderChamsWindow() noexcept
 {
     if (window.chams) {
-        ImGui::SetNextWindowSize(ImVec2(200.0f, 270.0f));
+        ImGui::SetNextWindowSize(ImVec2(330.0f, 140.0f));
         ImGui::Begin("Chams", &window.chams, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+        ImGui::Columns(2, nullptr, false);
+        ImGui::SetColumnOffset(1, 150.0f);
         ImGui::PushItemWidth(80.0f);
         ImGui::Checkbox("Enabled", &config.chams.enabled);
         ImGui::SliderFloat("Alpha", &config.chams.alpha, 0.0f, 1.0f);
+        ImGui::Combo("Shader", &config.chams.shader, "vertex\0unlit");
         ImGui::Checkbox("Wireframe", &config.chams.wireframe);
+        ImGui::NextColumn();
+        checkBoxAndColorPicker("Allies", &config.chams.allies, config.chams.alliesColor);
         checkBoxAndColorPicker("Visible allies", &config.chams.visibleAllies, config.chams.visibleAlliesColor);
-        checkBoxAndColorPicker("Occluded allies", &config.chams.occludedAllies, config.chams.occludedAlliesColor);
+        checkBoxAndColorPicker("Enemies", &config.chams.enemies, config.chams.enemiesColor);
         checkBoxAndColorPicker("Visible enemies", &config.chams.visibleEnemies, config.chams.visibleEnemiesColor);
-        checkBoxAndColorPicker("Occluded enemies", &config.chams.occludedEnemies, config.chams.occludedEnemiesColor);
         ImGui::End();
     }
 }
@@ -115,10 +119,11 @@ void GUI::renderChamsWindow() noexcept
 void GUI::renderTriggerbotWindow() noexcept
 {
     if (window.triggerbot) {
-        ImGui::SetNextWindowSize(ImVec2(180.0f, 100.0f));
+        ImGui::SetNextWindowSize(ImVec2(180.0f, 115.0f));
         ImGui::Begin("Triggerbot", &window.triggerbot, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
         ImGui::PushItemWidth(70.0f);
         ImGui::Checkbox("Enabled", &config.triggerbot.enabled);
+        ImGui::Checkbox("On key (ALT)", &config.triggerbot.onKey);
         ImGui::SliderInt("Shot delay", &config.triggerbot.shotDelay, 0, 250, "%d ms");
         ImGui::End();
     }

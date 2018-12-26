@@ -7,10 +7,10 @@
 #include <type_traits>
 #include <Windows.h>
 
-#include "SDK/Client.h"
-#include "SDK/ClientEntityList.h"
+#include "SDK/EntityList.h"
 #include "SDK/Cvar.h"
-#include "SDK/EngineClient.h"
+#include "SDK/Engine.h"
+#include "SDK/InputSystem.h"
 #include "SDK/MaterialSystem.h"
 #include "SDK/ModelRender.h"
 #include "SDK/RenderView.h"
@@ -20,14 +20,15 @@ class Interfaces final {
 public:
     explicit Interfaces() noexcept;
 
-    EngineClient* engineClient;
-    ClientEntityList* clientEntityList;
-    Client* client;
+    Engine* engine;
+    EntityList* entityList;
+    class Client* client;
     Surface* surface;
     Cvar* cvar;
     ModelRender* modelRender;
     MaterialSystem* materialSystem;
     RenderView* renderView;
+    InputSystem* inputSystem;
 private:
     template <typename T>
     auto find(const std::string& module, const std::string& name) const

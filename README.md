@@ -19,14 +19,16 @@ Free open-source training software / cheat for **Counter-Strike: Global Offensiv
 * **Chams** - color player models to improve visibility
     * **Enable** - on / off master switch
     * **Alpha** - material transparency
+    * **Shader** - sets chams shader [vertex (VertexLitGeneric) / unlit (UnlitGeneric)]
     * **Wireframe** - render triangle mesh instead of solid material
+    * **Allies** - allies chams on / off and color applied to them
     * **Visible allies** - visible allies chams on / off and color applied to them
-    * **Occluded allies** - occluded allies chams on / off and color applied to them
+    * **Enemies** - enemies chams on / off and color applied to them
     * **Visible enemies** - visible enemies chams on / off and color applied to them
-    * **Occluded enemies** - occluded enemies chams on / off and color applied to them
 
 * **Triggerbot** - automatically shoot when crosshair is on enemy
-    * **Enable** - on / off triggerbot switch, works when you hold **ALT** key
+    * **Enable** - on / off triggerbot master switch
+    * **On key (ALT)** - triggerbot works only when **ALT** key is being held
     * **Shot delay** - delay time in ms (milliseconds)
 
 * **Misc** - miscellaneous features
@@ -50,7 +52,7 @@ Free open-source training software / cheat for **Counter-Strike: Global Offensiv
 ## Getting started
 
 ### Prerequisites
-Microsoft Visual Studio 2017 and Windows SDK 10.0.17763.0 (10.0.17134.0 or lower should work too but requires change in project settings) are required in order to compile Osiris. If you don't have ones, you can download VS [here](https://visualstudio.microsoft.com/) (Windows SDK is installed during Visual Studio Setup).
+Microsoft Visual Studio 2017 15.9.4 and Windows SDK 10.0.17763.0 (10.0.17134.0 or lower should work too but requires change in project settings) are required in order to compile Osiris. If you don't have ones, you can download VS [here](https://visualstudio.microsoft.com/) (Windows SDK is installed during Visual Studio Setup).
 
 ### Cloning
 The very first step in order to compile Osiris is to clone this repo from GitHub to your local computer:

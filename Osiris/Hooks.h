@@ -6,7 +6,6 @@
 
 #include "Interfaces.h"
 #include "Memory.h"
-#include "SDK/ClientMode.h"
 #include "SDK/UserCmd.h"
 
 class Hooks final {
@@ -41,7 +40,7 @@ public:
         std::size_t length;
     };
 
-    Vmt surface{ interfaces.surface };
+    // Vmt surface{ interfaces.surface };
     Vmt clientMode{ memory.clientMode };
 };
 
